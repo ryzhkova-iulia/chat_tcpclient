@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -44,13 +45,16 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
+
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     while (!s.isClosed()) {
                         String line = in.readLine();
-                        chatArea.appendText("\n" + line);
+
+                        Platform.runLater(() -> chatArea.appendText("\n" + line));
                     }
 
                 } catch (IOException e) {
